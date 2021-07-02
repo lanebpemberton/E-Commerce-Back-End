@@ -20,7 +20,6 @@ router.get('/', async (req, res) => {
         }
     ]
     });
-      
     //return products status/error
     res.status(200).json(productResults);
   } catch (error) {
