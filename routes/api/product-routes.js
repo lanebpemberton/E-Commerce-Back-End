@@ -21,9 +21,19 @@ router.get('/', async (req, res) => {
 });
 
 // get one product
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  try
+  {
+    //get single product
+    const productResults = await Product.findOne({where:{id:req.params.id}});
+    //return products status/error
+    res.status(200).json(productResults);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({"error":error});
+  }
 });
 
 // create new product
@@ -100,8 +110,18 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
+  try
+  {
+    //delete single product
+    const productResults = await Product.destroy({where:{id:req.params.id}});
+    //return products status/error
+    res.status(200).json(productResults);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({"error":error});
+  }
 });
 
 module.exports = router;
