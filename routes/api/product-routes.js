@@ -10,7 +10,16 @@ router.get('/', async (req, res) => {
   try
   {
     //get products
-    const productResults = await Product.findAll();
+    const productResults = await Product.findAll({
+      include: [
+        {
+          model: Category
+        },
+        {
+          model: Tag
+        }
+    ]
+    });
       
     //return products status/error
     res.status(200).json(productResults);
@@ -27,7 +36,17 @@ router.get('/:id', async (req, res) => {
   try
   {
     //get single product
-    const productResults = await Product.findOne({where:{id:req.params.id}});
+    const productResults = await Product.findOne({
+      where:{id:req.params.id},
+      include: [
+        {
+          model: Category
+        },
+        {
+          model: Tag
+        }
+    ]
+    });
     //return products status/error
     res.status(200).json(productResults);
   } catch (error) {
